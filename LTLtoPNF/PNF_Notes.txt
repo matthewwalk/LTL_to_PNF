@@ -1,0 +1,41 @@
+POSITIVE NORMAL FORM NOTES:
+***negations only occur adjacent to atomic propositions
+
+TO CONVERT:
+for each operator a dual operator needs to be incorporated into the syntax of PNF formulae
+
+* De Morgan's rules yield the duality of conjunction and disjunction
+
+* The next operator is a dual of itself, therefore no extra operator is necessary
+
+* Until U and weak until W are dual
+¬(ϕ U ψ) ≡ (ϕ∧ ¬ψ) W (¬ϕ∧ ¬ψ)
+¬(ϕ W ψ) ≡ (ϕ∧ ¬ψ) U (¬ϕ∧ ¬ψ)
+
+* R is dual to U
+ϕ R ψ = ¬(¬ϕU¬ψ).
+
+***Perhaps I define a static dual operator for each i.e for not -> Dual = Not(True)
+
+
+OTHER NOTE
+ϕ ≡ ϕ W false
+♦ϕ = trueUϕ
+
+
+TO HELP WITH EXPONENTIAL EXPANSION WHEN CONVERTING TO PNF
+¬(ϕU ψ) ≡ (¬ψ) W (¬ϕ ∧ ¬ψ)
+
+
+
+general pseudocode:
+
+Algorithm normalize(Formula root) {
+	if (root is ap or bool) return //done
+
+	if (root is Not)
+		
+
+	normalize(root.children)
+}
+
