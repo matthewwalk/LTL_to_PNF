@@ -1,7 +1,11 @@
 package formula;
 
+import java.util.ArrayList;
+
 import ctl_grammar.And;
 import ctl_grammar.Not;
+import s.S;
+import v.Evaluator;
 import v.Visitor;
 
 /**
@@ -44,6 +48,10 @@ public class UnaryFormula extends Formula {
 	@Override
 	public Formula accept(Visitor visitor) {
 		return visitor.visit(this);
+	}
+	
+	public S accept(Evaluator evaluator) {
+		return evaluator.visit(this);
 	}
 
 }

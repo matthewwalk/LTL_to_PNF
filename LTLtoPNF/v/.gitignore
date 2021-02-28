@@ -2,3 +2,5 @@
 /Visitor.class
 /LTLtoPNFVisitor.class
 /CTLtoPNFVisitor.class
+/CTL_Evaluator.class
+/Evaluator.class

@@ -1,5 +1,7 @@
 package formula;
 
+import s.S;
+import v.Evaluator;
 import v.Visitor;
 
 /**
@@ -18,6 +20,10 @@ public class ConstantFormula extends Formula {
 	@Override
 	public Formula accept(Visitor visitor) {
 		return visitor.visit(this);
+	}
+	
+	public S accept(Evaluator evaluator) {
+		return evaluator.visit(this);
 	}
 
 	/**
