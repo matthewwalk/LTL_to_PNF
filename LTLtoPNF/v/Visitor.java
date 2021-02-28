@@ -1,9 +1,6 @@
 package v;
 
-import ltl.BinaryFormula;
-import ltl.ConstantFormula;
-import ltl.Formula;
-import ltl.UnaryFormula;
+import formula.*;
 
 /**
  * This class represents the Visitor interface for LTL formulas.

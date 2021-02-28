@@ -8,28 +8,21 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-import ltl.And;
-import ltl.AtomicProposition;
-import ltl.False;
-import ltl.Formula;
-import ltl.Next;
-import ltl.Not;
-import ltl.True;
-import ltl.Until;
-import ltl.WeakUntil;
-import v.FormulaVisitor;
+import ltl_grammar.*;
+import formula.*;
+import v.LTLtoPNFVisitor;
 
 class LTLPNFTester {
 
 	static Formula formula, formula2, formula3, formula4, formula5;
 	static Formula formula_sol, formula2_sol, formula3_sol, formula4_sol;
 
-	static FormulaVisitor normalizer;
+	static LTLtoPNFVisitor normalizer;
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
 		System.out.println("Beginning setup...");
-		normalizer = new FormulaVisitor();
+		normalizer = new LTLtoPNFVisitor();
 		formula = new Not(new Next(new Until(new AtomicProposition("a"), new Not(new AtomicProposition("b")))));
 		formula2 = new Not(new WeakUntil(new AtomicProposition("a"), new Not(new AtomicProposition("b"))));
 		formula3 = new Until(new Not(new Not(new Not(new True()))),
