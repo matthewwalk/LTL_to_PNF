@@ -16,6 +16,11 @@ public class Transition {
 		t.put(s1, s2);
 	}
 	
+	@SuppressWarnings("unchecked")
+	public HashMap<State, State> getTransitions() {
+		return (HashMap<State, State>) t.clone();
+	}
+	
 	@Override
 	public String toString() {
 		String result = "-> = {";

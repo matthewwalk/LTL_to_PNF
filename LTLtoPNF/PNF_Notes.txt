@@ -39,3 +39,23 @@ Algorithm normalize(Formula root) {
 	normalize(root.children)
 }
 
+
+
+
+
+
+
+
+
+
+
+
+E(a U b) -> Start with all b states, then find states which are a immediately preceding and then recursively follow each path back until no more a's then apply E
+
+
+
+
+
+EGa -> (overapproximation) start from outside and work in (all a states and recursively travel in )
+
+

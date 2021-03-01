@@ -8,15 +8,31 @@ import ctl_grammar.Not;
 public class State {
 	//Attributes
 	ArrayList<AtomicProposition> ap;
+	int id;
 	
 	public State() { //generate empty state
 		super();
 		this.ap = new ArrayList<AtomicProposition>();
+		this.id = 0;
 	}
 	
-	public State(ArrayList<AtomicProposition> ap) {
+	public State(int id) { //generate empty state
+		super();
+		this.ap = new ArrayList<AtomicProposition>();
+		this.id = id;
+	}
+	
+	public State(ArrayList<AtomicProposition> ap, int id) {
 		super();
 		this.ap = ap;
+		this.id = id;
+	}
+	
+	public State(AtomicProposition ap, int id) {
+		super();
+		this.ap = new ArrayList<AtomicProposition>();
+		this.ap.add(ap);
+		this.id = id;
 	}
 	
 	@Override
@@ -33,6 +49,10 @@ public class State {
 		return ap;
 	}
 	
+	public int getId() {
+		return id;
+	}
+	
 	public void addProposition(AtomicProposition ap) {
 		this.ap.add(ap);
 	}
@@ -43,6 +63,11 @@ public class State {
 	
 	public boolean satisfies(AtomicProposition ap) {
 		return getAPs().contains(ap);
+	}
+	
+	@Override
+	public String toString() {
+		return ""+this.getId();
 	}
 
 }

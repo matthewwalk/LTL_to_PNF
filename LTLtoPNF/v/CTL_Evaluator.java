@@ -1,5 +1,7 @@
 package v;
 
+import java.util.Map.Entry;
+
 import ctl_grammar.*;
 import formula.*;
 import s.*;
@@ -7,22 +9,15 @@ import s.*;
 public class CTL_Evaluator implements Evaluator {
 	
 	private S s;
-	private Transition t;
-	private S result;
 	
 	//TODO assume these need to be set to ensure proper calculaton
 	
-	public CTL_Evaluator(S s, Transition t) {
+	public CTL_Evaluator(S s) {
 		setS(s);
-		setT(t);
-		result = s; //Assume all states are satisfied to start
 	}
 	
 	private void setS(S s) {
 		this.s = s;
-	}
-	private void setT(Transition t) {
-		this.t = t;
 	}
 
 	@Override
@@ -33,9 +28,52 @@ public class CTL_Evaluator implements Evaluator {
 	@Override
 	public S visit(BinaryFormula binaryFormula) {
 		System.out.println("Visited: " + binaryFormula);
-		return result;
-		// TODO Auto-generated method stub
 		
+		S L = visit(binaryFormula.getLeft());
+		S R = visit(binaryFormula.getRight());
+		
+		//NORMAL PROPOSITIONAL LOGIC STUFF
+		if (binaryFormula instanceof And) {
+			S sat = L.And(R);
+			System.out.println("States: " + sat.statesToString() + " satisfy: " + binaryFormula + ", for states L = " + L.statesToString() + ", and R = " + R.statesToString());
+			return sat;
+		}
+		if (binaryFormula instanceof Or) {
+			S sat = L.Or(R);
+			System.out.println("States: " + sat.statesToString() + " satisfy: " + binaryFormula + ", for states L = " + L.statesToString() + ", and R = " + R.statesToString());
+			return sat;
+		}
+		if (binaryFormula instanceof Implies) {
+			S sat = s.doNotSatisfy(L).Or(R);
+			System.out.println("States: " + sat.statesToString() + " satisfy: " + binaryFormula + ", for states L = " + L.statesToString() + ", and R = " + R.statesToString());
+			return sat;
+		}
+		if (binaryFormula instanceof BidirectionalImplies) {
+			S sat = (s.doNotSatisfy(L).Or(R)).And(s.doNotSatisfy(R).Or(L));
+			System.out.println("States: " + sat.statesToString() + " satisfy: " + binaryFormula + ", for states L = " + L.statesToString() + ", and R = " + R.statesToString());
+			return sat;
+		}
+		
+		//FANCY PATH SHIT
+		if (binaryFormula instanceof AlongAllUntil) {
+			//First get all states that satisfy R
+			S Rstates = s.satisfy(R);
+			//Now Find all transitions that have R as the value
+			for (Entry<State, State> e : s.getTransitions().getTransitions().entrySet()) {
+				
+			}
+		}
+		if (binaryFormula instanceof AlongAllWeakUntil) {
+			
+		}
+		if (binaryFormula instanceof AlongOneUntil) {
+			
+		}
+		if (binaryFormula instanceof AlongOneWeakUntil) {
+			
+		}
+		
+		return new S(); //something went wrong
 	}
 
 	@Override
@@ -47,11 +85,11 @@ public class CTL_Evaluator implements Evaluator {
 		if (unaryFormula instanceof Not) {
 			//return all other states
 			S sat = s.doNotSatisfy(states);
-			System.out.println("States: " + sat + " do not satify " + states);
-			return s.doNotSatisfy(states);
+			System.out.println("States: " + sat.statesToString() + " satify: " + unaryFormula + ", for states: " + states.statesToString());
+			return sat;
 		}
 		
-		return new S();
+		return new S(); //error
 	}
 
 	@Override
@@ -62,7 +100,7 @@ public class CTL_Evaluator implements Evaluator {
 			//find which states satisfy this ap
 			AtomicProposition ap = (AtomicProposition) constantFormula;
 			S sat = s.satisfy(ap);
-			System.out.println("States: " + sat + " satify the atomic proposition: " + ap);
+			System.out.println("States: " + sat.statesToString() + " satify the atomic proposition: " + ap);
 			return sat;
 		}
 		
@@ -73,7 +111,7 @@ public class CTL_Evaluator implements Evaluator {
 		if (constantFormula instanceof False) {
 			return new S();
 		}
-		return null; //error
+		return new S(); //error
 	}
 	
 	
